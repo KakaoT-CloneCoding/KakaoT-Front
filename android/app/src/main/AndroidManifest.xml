@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kakaotaxi_front">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="kakaotaxi_front"
         android:name="${applicationName}"
@@ -7,6 +10,15 @@
 
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCoxeZ8hvuWrw6HZLLrLh0V-A3BeNfG0No"/>
+
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+          <intent-filter android:label="flutter_web_auth">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <data android:scheme="kakao410d28a44a8408dd4bbec3e1c2e99c59" android:host="oauth"/>
+          </intent-filter>
+        </activity>
 
         <activity
             android:name=".MainActivity"
