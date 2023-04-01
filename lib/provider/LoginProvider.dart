@@ -74,7 +74,7 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
-  Future checkLogin(String access_code) async {
-    final response = await kakaoLoginApi(access_code);
+  Future checkLogin(String access_token) async {
+    final response = await kakaoLoginApi(access_token);
   }
 }
