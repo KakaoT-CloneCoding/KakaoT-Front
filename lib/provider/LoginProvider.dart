@@ -1,41 +1,46 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:http/http.dart' as http;
+import 'package:kakaotaxi_front/model/user_model.dart';
 
 enum TargetPage { main, login }
 
 String loginUrl = Platform.isAndroid
     ? 'http://10.0.2.2:3000/users'
     : 'http://127.0.0.1:3000/users';
-kakaoLoginApi(String code) async {
-  try {
-    final url = Uri.parse('$loginUrl?code=$code');
-    http.Response response = await http.post(url, headers: <String, String>{
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }, body: {
-      "code": code,
-    });
-    print(response);
-  } catch (e) {
-    print('e:$e');
-  }
-}
 
 class LoginProvider with ChangeNotifier {
   TargetPage _targetPage = TargetPage.login;
   TargetPage get targetPage => _targetPage;
 
-  Future<String?> kakaoLogin() async {
+  kakaoLoginApi(String access_token) async {
+    try {
+      final url = Uri.parse(loginUrl);
+      http.Response response = await http.post(url, headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }, body: {
+        "access_token": access_token,
+      });
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+        UserModel userModel = UserModel.fromJson(data);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print('e:$e');
+    }
+  }
+
+  Future kakaoLogin() async {
     if (await isKakaoTalkInstalled()) {
       try {
         OAuthToken code = await UserApi.instance.loginWithKakaoTalk();
-        String? name = await checkLogin(code.accessToken);
+        await checkLogin(code.accessToken);
         _targetPage = TargetPage.main;
-
-        return name;
       } catch (error) {
         _targetPage = TargetPage.login;
 
@@ -49,10 +54,9 @@ class LoginProvider with ChangeNotifier {
         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
           OAuthToken code = await UserApi.instance.loginWithKakaoAccount();
-          String? name = await checkLogin(code.accessToken);
+          await checkLogin(code.accessToken);
+          print(code.accessToken);
           _targetPage = TargetPage.main;
-
-          return name;
         } catch (error) {
           _targetPage = TargetPage.login;
         }
@@ -60,10 +64,9 @@ class LoginProvider with ChangeNotifier {
     } else {
       try {
         OAuthToken code = await UserApi.instance.loginWithKakaoAccount();
-        String? name = await checkLogin(code.accessToken);
+        await checkLogin(code.accessToken);
+        print(code.accessToken);
         _targetPage = TargetPage.main;
-
-        return name;
       } catch (error) {
         _targetPage = TargetPage.login;
         print(error);
@@ -71,7 +74,7 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
-  Future<String?> checkLogin(String code) async {
-    final response = await kakaoLoginApi(code);
+  Future checkLogin(String access_code) async {
+    final response = await kakaoLoginApi(access_code);
   }
 }
