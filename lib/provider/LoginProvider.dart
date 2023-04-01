@@ -24,7 +24,7 @@ class LoginProvider with ChangeNotifier {
       }, body: {
         "access_token": access_token,
       });
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         Map<String, dynamic> data = json.decode(response.body);
         UserModel userModel = UserModel.fromJson(data);
       } else {
