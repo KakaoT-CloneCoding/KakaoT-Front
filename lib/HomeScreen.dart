@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 150,
           ),
           const SliverPadding(
