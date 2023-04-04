@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kakaotaxi_front/MainScreen.dart';
 import 'package:kakaotaxi_front/provider/LoginProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,23 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
       body: Center(
           child: ElevatedButton(
               onPressed: () async {
-                await Provider.of<LoginProvider>(context, listen: false)
-                    .kakaoLogin();
+                var provider =
+                    Provider.of<LoginProvider>(context, listen: false);
+                await provider.kakaoLogin();
+                if (mounted) {
+                  if (provider.targetPage == TargetPage.main) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => MainScreen())));
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                    '카카오 로그인 오류. 다시 시도해 주세요!',
+                    textAlign: TextAlign.center,
+                  )));
+                }
               },
               child: const Text('login'))),
     );
