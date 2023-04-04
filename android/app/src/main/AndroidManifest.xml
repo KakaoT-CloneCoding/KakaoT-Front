@@ -6,10 +6,13 @@
    <application
         android:label="kakaotaxi_front"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCoxeZ8hvuWrw6HZLLrLh0V-A3BeNfG0No"/>
+         <meta-data 
+        android:name="com.kakao.sdk.AppKey" android:value="ea95b427eb9309a4faaaf05f2976485e"/>
 
         <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
           <intent-filter android:label="flutter_web_auth">

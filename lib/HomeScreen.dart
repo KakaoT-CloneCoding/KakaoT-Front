@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: MainGridItem(),
+            child: MainGridItem(context),
           ),
           // SliverGrid.count(
           //   crossAxisCount: 4,

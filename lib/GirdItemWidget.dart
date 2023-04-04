@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'TexiMapScreen.dart';
+
 //test
 
-Widget MainGridItem() {
+Widget MainGridItem(BuildContext context) {
   return GridView.count(
     physics: const NeverScrollableScrollPhysics(),
     shrinkWrap: true,
@@ -19,7 +21,10 @@ Widget MainGridItem() {
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => KakaoMapTest()));
+          },
           child: Container(),
         ),
       ),
