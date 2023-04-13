@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
+import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
+import '';
 
 const String kakaoMapKey = 'ea95b427eb9309a4faaaf05f2976485e';
 
@@ -8,44 +10,53 @@ class KakaoMapTest extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text('Kakao map webview test')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          KakaoMapView(
-              width: size.width,
-              height: 400,
-              kakaoMapKey: kakaoMapKey,
-              lat: 33.450701,
-              lng: 126.570667,
-              showMapTypeControl: true,
-              showZoomControl: true,
-              markerImageURL:
-                  'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-              onTapMarker: (message) async {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text('Marker is clicked')));
-
-                //await _openKakaoMapScreen(context);
-              }),
-          ElevatedButton(
-              child: Text('Kakao map screen'),
-              onPressed: () async {
-                await _openKakaoMapScreen(context);
-              })
-        ],
-      ),
+      resizeToAvoidBottomInset: false,
+      bottomSheet: bottomSheetWidget(false, context),
+      body: Stack(children: [
+        KakaoMapView(
+          width: size.width,
+          height: size.height,
+          kakaoMapKey: kakaoMapKey,
+          lat: 33.450801,
+          lng: 126.570667,
+          showMapTypeControl: true,
+        ),
+        Positioned(
+            top: 0,
+            bottom: -300,
+            right: 10,
+            child: FloatingActionButton(
+              backgroundColor: Colors.white,
+              onPressed: () {},
+              child: const Icon(
+                Icons.gps_not_fixed_rounded,
+                color: Colors.grey,
+              ),
+            )),
+        Positioned(
+            top: 0,
+            bottom: -300,
+            left: 10,
+            child: FloatingActionButton(
+              backgroundColor: Colors.white,
+              onPressed: () {},
+              child: const Icon(
+                Icons.gps_not_fixed_rounded,
+                color: Colors.grey,
+              ),
+            )),
+        Positioned(
+            top: 50,
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back),
+              ),
+            )),
+      ]),
     );
-  }
-
-  Future<void> _openKakaoMapScreen(BuildContext context) async {
-    KakaoMapUtil util = KakaoMapUtil();
-
-    // String url = await util.getResolvedLink(
-    //     util.getKakaoMapURL(37.402056, 127.108212, name: 'Kakao 본사'));
-
-    /// This is short form of the above comment
-    String url =
-        await util.getMapScreenURL(37.402056, 127.108212, name: 'Kakao 본사');
   }
 }
