@@ -13,6 +13,15 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.grey,
+          ),
+        ),
         elevation: 0,
         backgroundColor: Colors.white,
       ),
@@ -121,23 +130,29 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
               height: 10,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                '최근 내역',
-                style: TextStyle(
-                  color: Colors.grey,
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  '최근 내역',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                child: const Text(
-                  '편집',
-                  style: TextStyle(color: Colors.grey),
+                GestureDetector(
+                  onTap: () {
+                    print('edit');
+                  },
+                  child: const Text(
+                    '편집',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

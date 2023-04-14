@@ -50,8 +50,8 @@ Widget bottomSheetWidget(bool textCtrl, BuildContext context) {
                           backgroundColor: Colors.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            side:
-                                BorderSide(color: Colors.blueGrey, width: 2.0),
+                            side: const BorderSide(
+                                color: Colors.grey, width: 2.0),
                           ),
                         ),
                         label: const Text('집'),
@@ -66,8 +66,8 @@ Widget bottomSheetWidget(bool textCtrl, BuildContext context) {
                           backgroundColor: Colors.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            side:
-                                BorderSide(color: Colors.blueGrey, width: 2.0),
+                            side: const BorderSide(
+                                color: Colors.grey, width: 2.0),
                           ),
                         ),
                         label: const Text('회사'),
