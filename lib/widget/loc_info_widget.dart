@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:kakaotaxi_front/loc_info_screen.dart';
 
-Widget bottomSheetWidget(bool textCtrl, BuildContext context) {
+Widget bottomSheetWidget(bool textCtrl, BuildContext context, String address) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
@@ -23,12 +23,12 @@ Widget bottomSheetWidget(bool textCtrl, BuildContext context) {
                 children: [
                   TextField(
                     enabled: textCtrl,
-                    decoration: const InputDecoration(
-                        icon: Icon(
+                    decoration: InputDecoration(
+                        icon: const Icon(
                           Icons.circle,
                           size: 10,
                         ),
-                        labelText: '현재위치'),
+                        labelText: address),
                   ),
                   TextField(
                     enabled: textCtrl,

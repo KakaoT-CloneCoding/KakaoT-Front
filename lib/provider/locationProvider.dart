@@ -33,4 +33,22 @@ class GetLocationProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+  setPosition(dynamic object) {
+    _locationModel = LocationModel.fromJson(object);
+    notifyListeners();
+  }
+
+  Future<String> geoCode(double currentLat, double currentLng) async {
+    String url =
+        'https://dapi.kakao.com/v2/local/geo/coord2address.json?x=$currentLng&y=$currentLat&input_coord=WGS84';
+    http.Response response = await http.get(Uri.parse(url), headers: {
+      'Authorization': "KakaoAK 3f74c96b08a8af5b019d51d6cea0dc7e",
+      'Content-Type': 'application/json',
+    });
+    dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
+    List document = body['documents'];
+    String address = document[0]["address"]["address_name"];
+    return address;
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kakaotaxi_front/provider/locationProvider.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/GirdItemWidget.dart';
 

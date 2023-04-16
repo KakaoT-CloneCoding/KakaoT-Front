@@ -24,22 +24,7 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
 
   dynamic _centerLatLng;
   late LatLng centerLatLng;
-
-  Future<void> _getMapCenter() async {
-    // 자바스크립트 코드 실행
-    await _mapController.runJavascript('''
-         $_centerLatLng = map.getCenter();  
-      ''');
-    print(_centerLatLng);
-    // JSON 문자열 파싱
-
-    // 위도, 경도 값 추출
-
-    // LatLng 객체 생성
-    setState(() {
-      centerLatLng = centerLatLng;
-    });
-  }
+  late String address;
 
   String a = '123';
   @override
@@ -48,7 +33,11 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomSheet: bottomSheetWidget(false, context),
+      bottomSheet: Consumer(
+        builder: (BuildContext context, value, Widget? child) {
+          return bottomSheetWidget(false, context, address);
+        },
+      ),
       body: Stack(children: [
         KakaoMapView(
           width: size.width,
@@ -61,11 +50,13 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
           },
 
           //이게... 중심좌표 알려주는건가보다... 스크립트 안써도 할 수 있었네..?
-          cameraIdle: (message) {
+          cameraIdle: (message) async {
             KakaoLatLng latLng =
                 KakaoLatLng.fromJson(jsonDecode(message.message));
-            LocationModel.fromJson(jsonDecode(message.message));
-            print('########## ${provider.locationModel.lat}');
+            provider.setPosition(jsonDecode(message.message));
+            address = await provider.geoCode(
+                provider.locationModel.lat, provider.locationModel.lng);
+            print('########## $address');
             debugPrint('[idle] ${latLng.lat}, ${latLng.lng}');
             print('###');
             print(a);
