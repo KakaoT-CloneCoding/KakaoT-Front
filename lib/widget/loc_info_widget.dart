@@ -6,7 +6,9 @@ Widget bottomSheetWidget(bool textCtrl, BuildContext context, String address) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
-          context, MaterialPageRoute(builder: ((context) => LocInfoScreen())));
+          context,
+          MaterialPageRoute(
+              builder: ((context) => LocInfoScreen(address: address))));
     },
     child: Container(
         decoration: BoxDecoration(

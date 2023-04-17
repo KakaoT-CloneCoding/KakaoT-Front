@@ -30,6 +30,7 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<GetLocationProvider>(context);
+    address = provider.initialAddress;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,

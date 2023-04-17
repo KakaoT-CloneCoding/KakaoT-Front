@@ -28,6 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
     var provider = Provider.of<GetLocationProvider>(context, listen: false);
 
     await provider.getPosition();
+    await provider.geoCode(
+        provider.locationModel.lat, provider.locationModel.lng);
     print(provider.locationModel.lat);
 
     Timer(const Duration(seconds: 1), () {

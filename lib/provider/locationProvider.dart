@@ -12,7 +12,8 @@ class GetLocationProvider with ChangeNotifier {
   late double lat;
   late double lng;
   var locationData;
-
+  var _initialAddress;
+  String get initialAddress => _initialAddress;
   var _locationModel;
   LocationModel get locationModel => _locationModel;
 
@@ -48,7 +49,9 @@ class GetLocationProvider with ChangeNotifier {
     });
     dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
     List document = body['documents'];
+    _initialAddress = document[0]["address"]["address_name"];
     String address = document[0]["address"]["address_name"];
+
     return address;
   }
 }

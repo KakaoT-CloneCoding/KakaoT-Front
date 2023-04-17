@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
 
 class LocInfoScreen extends StatefulWidget {
-  const LocInfoScreen({super.key});
+  String address;
+  LocInfoScreen({required this.address, super.key});
 
   @override
   State<LocInfoScreen> createState() => _LocInfoScreenState();
@@ -40,7 +41,7 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                         Icons.circle,
                         size: 10,
                       ),
-                      labelText: '현재위치'),
+                      labelText: widget.address),
                 ),
                 TextField(
                   decoration: InputDecoration(
