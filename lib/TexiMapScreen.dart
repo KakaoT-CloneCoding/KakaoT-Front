@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:kakaotaxi_front/model/loc_model.dart';
 import 'package:kakaotaxi_front/provider/locationProvider.dart';
@@ -10,7 +10,7 @@ import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-const String kakaoMapKey = 'ea95b427eb9309a4faaaf05f2976485e';
+final kakaoMapKey = dotenv.env['kakao_map_key'];
 
 class KakaoMapTest extends StatefulWidget {
   const KakaoMapTest({super.key});
@@ -23,7 +23,7 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
   late WebViewController _mapController;
 
   dynamic _centerLatLng;
-  late LatLng centerLatLng;
+
   late String address;
 
   String a = '123';
@@ -43,7 +43,7 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
         KakaoMapView(
           width: size.width,
           height: size.height,
-          kakaoMapKey: kakaoMapKey,
+          kakaoMapKey: kakaoMapKey as String,
           lat: provider.locationModel.lat,
           lng: provider.locationModel.lng,
           mapController: (controller) {

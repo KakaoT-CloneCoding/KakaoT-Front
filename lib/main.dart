@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:kakaotaxi_front/KakaoLoginScreen.dart';
 import 'package:kakaotaxi_front/MainScreen.dart';
+import 'package:kakaotaxi_front/TexiMapScreen.dart';
 import 'package:kakaotaxi_front/provider/LoginProvider.dart';
+import 'package:kakaotaxi_front/provider/locationProvider.dart';
+import 'package:kakaotaxi_front/splashScreen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  KakaoSdk.init(nativeAppKey: '410d28a44a8408dd4bbec3e1c2e99c59');
+void main() async {
+  await dotenv.load(fileName: ".env");
+  KakaoSdk.init(nativeAppKey: dotenv.env['kakao_native_app_key']);
   runApp(const MyApp());
 }
 
@@ -17,7 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => LoginProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: ((context) => GetLocationProvider()))
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -32,7 +40,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const KakaoLoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
