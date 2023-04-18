@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kakaotaxi_front/provider/locationProvider.dart';
 import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
+import 'package:provider/provider.dart';
 
 class LocInfoScreen extends StatefulWidget {
   String address;
@@ -10,8 +12,11 @@ class LocInfoScreen extends StatefulWidget {
 }
 
 class _LocInfoScreenState extends State<LocInfoScreen> {
+  final TextEditingController desController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<GetLocationProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -44,6 +49,10 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                       labelText: widget.address),
                 ),
                 TextField(
+                  controller: desController,
+                  onChanged: (value) async {
+                    await provider.searchPosition(desController.text);
+                  },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
