@@ -31,7 +31,7 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
       ),
-      body: Column(
+      body: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -133,37 +133,61 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
               ],
             ),
           ),
-          SizedBox(
+          Positioned(
+            top: 210,
+            child: SizedBox(
+              child: Container(
+                color: Colors.grey,
+                width: MediaQuery.of(context).size.width,
+                height: 10,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 220,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    '최근 내역',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      print('edit');
+                    },
+                    child: const Text(
+                      '편집',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // seachLoc 결과값
+          Positioned(
+            top: 150,
             child: Container(
-              color: Colors.grey,
               width: MediaQuery.of(context).size.width,
-              height: 10,
+              height: MediaQuery.of(context).size.height - 200,
+              color: Colors.white,
+              child: ListView(
+                children: [
+                  provider.searchModel.place_name.isEmpty
+                      ? const SizedBox()
+                      : Text(provider.searchModel.place_name)
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  '최근 내역',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    print('edit');
-                  },
-                  child: const Text(
-                    '편집',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          )
         ],
       ),
     );
