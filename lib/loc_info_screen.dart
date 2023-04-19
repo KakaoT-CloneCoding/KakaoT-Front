@@ -179,6 +179,13 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 200,
               color: Colors.white,
+              child: ListView(
+                children: [
+                  provider.searchModel.place_name.isEmpty
+                      ? const SizedBox()
+                      : Text(provider.searchModel.place_name)
+                ],
+              ),
             ),
           )
         ],
