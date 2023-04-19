@@ -21,6 +21,9 @@ class GetLocationProvider with ChangeNotifier {
   var _locationModel;
   LocationModel get locationModel => _locationModel;
 
+  var _searchModel;
+  SearchModel get searchModel => _searchModel;
+
   Future getPosition() async {
     LocationPermission permission = await Geolocator.requestPermission();
 
@@ -73,8 +76,8 @@ class GetLocationProvider with ChangeNotifier {
     );
     dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
     List<dynamic> document = body["documents"];
-    var searchModel =
+    _searchModel =
         document.map((dynamic item) => SearchModel.fromJson(item)).toList();
-    print(searchModel[0].place_name);
+    // print(_searchModel[0].place_name);
   }
 }
