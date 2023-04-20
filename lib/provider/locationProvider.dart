@@ -21,9 +21,6 @@ class GetLocationProvider with ChangeNotifier {
   var _locationModel;
   LocationModel get locationModel => _locationModel;
 
-  var _searchModel;
-  SearchModel get searchModel => _searchModel;
-
   Future getPosition() async {
     LocationPermission permission = await Geolocator.requestPermission();
 
@@ -65,19 +62,22 @@ class GetLocationProvider with ChangeNotifier {
   }
 
   searchPosition(String query) async {
-    String url =
-        "https://dapi.kakao.com/v2/local/search/keyword.json?query=$query";
-    http.Response response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Authorization': "KakaoAK $kakao_rest_api_key",
-        'Content-Type': 'application/json'
-      },
-    );
-    dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
-    List<dynamic> document = body["documents"];
-    _searchModel =
-        document.map((dynamic item) => SearchModel.fromJson(item)).toList();
-    // print(_searchModel[0].place_name);
+    if (query.isNotEmpty) {
+      String url =
+          "https://dapi.kakao.com/v2/local/search/keyword.json?query=$query";
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': "KakaoAK $kakao_rest_api_key",
+          'Content-Type': 'application/json'
+        },
+      );
+      dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
+      List<dynamic> document = body["documents"];
+      var searchModel =
+          document.map((dynamic item) => SearchModel.fromJson(item)).toList();
+      // print(_searchModel[0].place_name);
+      return searchModel;
+    }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kakaotaxi_front/model/search_model.dart';
 import 'package:kakaotaxi_front/provider/locationProvider.dart';
 import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
+import 'package:kakaotaxi_front/widget/search_list_widget.dart';
 import 'package:provider/provider.dart';
 
 class LocInfoScreen extends StatefulWidget {
@@ -13,6 +15,29 @@ class LocInfoScreen extends StatefulWidget {
 
 class _LocInfoScreenState extends State<LocInfoScreen> {
   final TextEditingController desController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  List<SearchModel> searchModel = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,104 +58,127 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
       ),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      icon: const Icon(
-                        Icons.circle,
-                        size: 10,
-                      ),
-                      labelText: widget.address),
-                ),
-                TextField(
-                  controller: desController,
-                  onChanged: (value) async {
-                    await provider.searchPosition(desController.text);
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      icon: const Icon(
-                        Icons.circle,
-                        color: Colors.red,
-                        size: 10,
-                      ),
-                      labelText: '도착지 검색'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.circular(20.0),
-                          side:
-                              const BorderSide(color: Colors.white, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        icon: const Icon(
+                          Icons.circle,
+                          size: 10,
+                        ),
+                        labelText: widget.address),
+                  ),
+                  TextField(
+                    controller: desController,
+                    focusNode: _focusNode,
+                    onChanged: (value) async {
+                      dynamic data =
+                          await provider.searchPosition(desController.text);
+                      if (data != null) {
+                        searchModel = data;
+
+                        setState(() {});
+                      }
+                      // print(searchModel[0].place_name);
+                    },
+                    decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        icon: const Icon(
+                          Icons.circle,
+                          color: Colors.red,
+                          size: 10,
+                        ),
+                        labelText: '도착지 검색'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            side: const BorderSide(
+                                color: Colors.white, width: 2.0),
+                          ),
+                        ),
+                        label: const Text(
+                          '집',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        icon: const Icon(
+                          Icons.home,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            side: const BorderSide(
+                                color: Colors.white, width: 2.0),
+                          ),
+                        ),
+                        label: const Text(
+                          '회사',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        icon: const Icon(
+                          Icons.work,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
+                      const Spacer(),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.gps_not_fixed_rounded,
+                            color: Colors.grey,
+                          )),
+                      const SizedBox(
+                        child: Text(
+                          "|",
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                       ),
-                      label: const Text(
-                        '집',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      icon: const Icon(
-                        Icons.home,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {},
-                    ),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          side:
-                              const BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                      ),
-                      label: const Text(
-                        '회사',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      icon: const Icon(
-                        Icons.work,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {},
-                    ),
-                    const Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.gps_not_fixed_rounded,
-                          color: Colors.grey,
-                        )),
-                    const SizedBox(
-                      child: Text(
-                        "|",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.map,
-                          color: Colors.grey,
-                        )),
-                  ],
-                ),
-              ],
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.map,
+                            color: Colors.grey,
+                          )),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(
@@ -173,21 +221,26 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
             ),
           ),
           // seachLoc 결과값
-          Positioned(
-            top: 150,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 200,
-              color: Colors.white,
-              child: ListView(
-                children: [
-                  provider.searchModel.place_name.isEmpty
-                      ? const SizedBox()
-                      : Text(provider.searchModel.place_name)
-                ],
-              ),
-            ),
-          )
+          _isFocused == true && desController.text.isNotEmpty
+              ? Positioned(
+                  top: 150,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.white,
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return searchListWidget(searchModel[index].place_name,
+                              searchModel[index].address_name);
+                        },
+                        itemCount: searchModel.length,
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            height: 2,
+                          );
+                        },
+                      )))
+              : const SizedBox()
         ],
       ),
     );
