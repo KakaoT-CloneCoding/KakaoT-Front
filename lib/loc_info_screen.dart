@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kakaotaxi_front/model/search_model.dart';
 import 'package:kakaotaxi_front/provider/locationProvider.dart';
 import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
+import 'package:kakaotaxi_front/widget/search_list_widget.dart';
 import 'package:provider/provider.dart';
 
 class LocInfoScreen extends StatefulWidget {
@@ -13,6 +15,29 @@ class LocInfoScreen extends StatefulWidget {
 
 class _LocInfoScreenState extends State<LocInfoScreen> {
   final TextEditingController desController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  List<SearchModel> searchModel = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +74,20 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                       labelText: widget.address),
                 ),
                 TextField(
+                  onTap: () {
+                    print(_isFocused);
+                  },
                   controller: desController,
+                  focusNode: _focusNode,
                   onChanged: (value) async {
-                    await provider.searchPosition(desController.text);
+                    dynamic data =
+                        await provider.searchPosition(desController.text);
+                    if (data != null) {
+                      searchModel = data;
+
+                      setState(() {});
+                    }
+                    // print(searchModel[0].place_name);
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -173,21 +209,26 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
             ),
           ),
           // seachLoc 결과값
-          Positioned(
-            top: 150,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 200,
-              color: Colors.white,
-              child: ListView(
-                children: [
-                  provider.searchModel.place_name.isEmpty
-                      ? const SizedBox()
-                      : Text(provider.searchModel.place_name)
-                ],
-              ),
-            ),
-          )
+          _isFocused == true
+              ? Positioned(
+                  top: 150,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height - 200,
+                      color: Colors.white,
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return searchListWidget(searchModel[index].place_name,
+                              searchModel[index].road_address_name);
+                        },
+                        itemCount: searchModel.length,
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            height: 2,
+                          );
+                        },
+                      )))
+              : const SizedBox()
         ],
       ),
     );
