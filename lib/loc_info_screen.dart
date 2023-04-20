@@ -66,7 +66,13 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                 children: [
                   TextField(
                     decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                         border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         icon: const Icon(
@@ -89,7 +95,13 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                       // print(searchModel[0].place_name);
                     },
                     decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                         border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         icon: const Icon(
@@ -214,12 +226,12 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                   top: 150,
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height - 200,
+                      height: MediaQuery.of(context).size.height,
                       color: Colors.white,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
                           return searchListWidget(searchModel[index].place_name,
-                              searchModel[index].road_address_name);
+                              searchModel[index].address_name);
                         },
                         itemCount: searchModel.length,
                         separatorBuilder: (context, index) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-searchListWidget(String place_name, String road_address_name) {
+searchListWidget(String place_name, String address_name) {
   return Padding(
     padding: const EdgeInsets.all(15.0),
     child: Column(
@@ -38,7 +38,7 @@ searchListWidget(String place_name, String road_address_name) {
             const SizedBox(
               width: 15,
             ),
-            Text(road_address_name,
+            Text(address_name,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
