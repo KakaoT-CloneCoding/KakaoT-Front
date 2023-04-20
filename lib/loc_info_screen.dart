@@ -58,115 +58,115 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
       ),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      icon: const Icon(
-                        Icons.circle,
-                        size: 10,
-                      ),
-                      labelText: widget.address),
-                ),
-                TextField(
-                  onTap: () {
-                    print(_isFocused);
-                  },
-                  controller: desController,
-                  focusNode: _focusNode,
-                  onChanged: (value) async {
-                    dynamic data =
-                        await provider.searchPosition(desController.text);
-                    if (data != null) {
-                      searchModel = data;
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        icon: const Icon(
+                          Icons.circle,
+                          size: 10,
+                        ),
+                        labelText: widget.address),
+                  ),
+                  TextField(
+                    controller: desController,
+                    focusNode: _focusNode,
+                    onChanged: (value) async {
+                      dynamic data =
+                          await provider.searchPosition(desController.text);
+                      if (data != null) {
+                        searchModel = data;
 
-                      setState(() {});
-                    }
-                    // print(searchModel[0].place_name);
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      icon: const Icon(
-                        Icons.circle,
-                        color: Colors.red,
-                        size: 10,
-                      ),
-                      labelText: '도착지 검색'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
+                        setState(() {});
+                      }
+                      // print(searchModel[0].place_name);
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
-                          side:
-                              const BorderSide(color: Colors.white, width: 2.0),
+                        ),
+                        icon: const Icon(
+                          Icons.circle,
+                          color: Colors.red,
+                          size: 10,
+                        ),
+                        labelText: '도착지 검색'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            side: const BorderSide(
+                                color: Colors.white, width: 2.0),
+                          ),
+                        ),
+                        label: const Text(
+                          '집',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        icon: const Icon(
+                          Icons.home,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            side: const BorderSide(
+                                color: Colors.white, width: 2.0),
+                          ),
+                        ),
+                        label: const Text(
+                          '회사',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        icon: const Icon(
+                          Icons.work,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
+                      const Spacer(),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.gps_not_fixed_rounded,
+                            color: Colors.grey,
+                          )),
+                      const SizedBox(
+                        child: Text(
+                          "|",
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                       ),
-                      label: const Text(
-                        '집',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      icon: const Icon(
-                        Icons.home,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {},
-                    ),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          side:
-                              const BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                      ),
-                      label: const Text(
-                        '회사',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      icon: const Icon(
-                        Icons.work,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {},
-                    ),
-                    const Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.gps_not_fixed_rounded,
-                          color: Colors.grey,
-                        )),
-                    const SizedBox(
-                      child: Text(
-                        "|",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.map,
-                          color: Colors.grey,
-                        )),
-                  ],
-                ),
-              ],
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.map,
+                            color: Colors.grey,
+                          )),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(
@@ -209,7 +209,7 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
             ),
           ),
           // seachLoc 결과값
-          _isFocused == true
+          _isFocused == true && desController.text.isNotEmpty
               ? Positioned(
                   top: 150,
                   child: Container(
