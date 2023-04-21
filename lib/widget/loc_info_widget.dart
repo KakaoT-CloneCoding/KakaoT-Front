@@ -1,6 +1,6 @@
 // 출발 도착지 입력 부분 위젯
 import 'package:flutter/material.dart';
-import 'package:kakaotaxi_front/loc_info_screen.dart';
+import 'package:kakaotaxi_front/screen/loc_info_screen.dart';
 
 Widget bottomSheetWidget(bool textCtrl, BuildContext context, String address) {
   return GestureDetector(

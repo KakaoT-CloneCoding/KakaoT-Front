@@ -72,12 +72,16 @@ class GetLocationProvider with ChangeNotifier {
           'Content-Type': 'application/json'
         },
       );
-      dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
-      List<dynamic> document = body["documents"];
-      var searchModel =
-          document.map((dynamic item) => SearchModel.fromJson(item)).toList();
-      // print(_searchModel[0].place_name);
-      return searchModel;
+      if (response.statusCode == 200) {
+        dynamic body = jsonDecode(utf8.decode(response.bodyBytes));
+        List<dynamic> document = body["documents"];
+        var searchModel =
+            document.map((dynamic item) => SearchModel.fromJson(item)).toList();
+        // print(_searchModel[0].place_name);
+        return searchModel;
+      } else {
+        print('Failed to search address');
+      }
     }
   }
 }
