@@ -17,6 +17,7 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
   final TextEditingController desController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
+  bool isDone = false;
 
   List<SearchModel> searchModel = [];
 
@@ -82,6 +83,12 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                         labelText: widget.address),
                   ),
                   TextField(
+                    onTap: () {
+                      if (isDone == true) {
+                        desController.clear();
+                        isDone = false;
+                      }
+                    },
                     controller: desController,
                     focusNode: _focusNode,
                     onChanged: (value) async {
@@ -93,6 +100,13 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                         setState(() {});
                       }
                       // print(searchModel[0].place_name);
+                    },
+                    onSubmitted: (value) {
+                      isDone = true;
+                      // if (_isFocused == true) {
+                      //   isDone = false;
+                      // }
+                      print("!@!@!@!");
                     },
                     decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -242,6 +256,43 @@ class _LocInfoScreenState extends State<LocInfoScreen> {
                           );
                         },
                       )))
+              : const SizedBox(),
+          isDone == true
+              ? const Positioned(
+                  top: 135,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      '장소결과',
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    ),
+                  ))
+              : const SizedBox(),
+          isDone == true
+              ? Positioned(
+                  top: 170,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    color: Colors.white,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return resultListWidget(
+                            searchModel[index].place_name,
+                            searchModel[index].address_name,
+                            desController.text);
+                      },
+                      itemCount: searchModel.length,
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          height: 2,
+                        );
+                      },
+                    ),
+                  ))
               : const SizedBox()
         ],
       ),
