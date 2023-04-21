@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../TexiMapScreen.dart';
+import '../screen/TexiMapScreen.dart';
 
 //test
 
