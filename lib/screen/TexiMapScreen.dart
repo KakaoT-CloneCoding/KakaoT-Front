@@ -49,8 +49,6 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
           mapController: (controller) {
             _mapController = controller;
           },
-
-          //이게... 중심좌표 알려주는건가보다... 스크립트 안써도 할 수 있었네..?
           cameraIdle: (message) async {
             KakaoLatLng latLng =
                 KakaoLatLng.fromJson(jsonDecode(message.message));
