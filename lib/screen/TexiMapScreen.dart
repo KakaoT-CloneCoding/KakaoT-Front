@@ -71,7 +71,7 @@ class _KakaoMapTestState extends State<KakaoMapTest> {
               onPressed: () {},
               child: const Icon(
                 Icons.gps_not_fixed_rounded,
-                color: Colors.grey,
+                color: Colors.blue,
               ),
             )),
         Positioned(
