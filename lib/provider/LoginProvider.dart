@@ -39,7 +39,7 @@ class LoginProvider with ChangeNotifier {
     if (await isKakaoTalkInstalled()) {
       try {
         OAuthToken code = await UserApi.instance.loginWithKakaoTalk();
-        await checkLogin(code.accessToken);
+        await kakaoLoginApi(code.accessToken);
         _targetPage = TargetPage.main;
       } catch (error) {
         _targetPage = TargetPage.login;
@@ -54,7 +54,7 @@ class LoginProvider with ChangeNotifier {
         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
           OAuthToken code = await UserApi.instance.loginWithKakaoAccount();
-          await checkLogin(code.accessToken);
+          await kakaoLoginApi(code.accessToken);
           print(code.accessToken);
           _targetPage = TargetPage.main;
         } catch (error) {
@@ -64,7 +64,7 @@ class LoginProvider with ChangeNotifier {
     } else {
       try {
         OAuthToken code = await UserApi.instance.loginWithKakaoAccount();
-        await checkLogin(code.accessToken);
+        await kakaoLoginApi(code.accessToken);
         print(code.accessToken);
         _targetPage = TargetPage.main;
       } catch (error) {
@@ -72,9 +72,5 @@ class LoginProvider with ChangeNotifier {
         print(error);
       }
     }
-  }
-
-  Future checkLogin(String access_token) async {
-    final response = await kakaoLoginApi(access_token);
   }
 }

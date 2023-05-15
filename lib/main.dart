@@ -11,7 +11,9 @@ import 'screen/splashScreen.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  KakaoSdk.init(nativeAppKey: dotenv.env['kakao_native_app_key']);
+  KakaoSdk.init(
+      nativeAppKey: dotenv.env['kakao_native_app_key'],
+      javaScriptAppKey: dotenv.env['kakao_map_key']);
   runApp(const MyApp());
 }
 
