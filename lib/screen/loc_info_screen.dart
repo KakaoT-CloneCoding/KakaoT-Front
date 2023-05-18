@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kakaotaxi_front/model/search_model.dart';
-import 'package:kakaotaxi_front/provider/locationProvider.dart';
-import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
 import 'package:kakaotaxi_front/widget/search_list_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../provider/location_provider.dart';
 
 class LocInfoScreen extends StatefulWidget {
   String address;
