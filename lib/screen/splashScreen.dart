@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:kakaotaxi_front/screen/HomeScreen.dart';
 import 'package:kakaotaxi_front/screen/KakaoLoginScreen.dart';
-import 'package:kakaotaxi_front/provider/locationProvider.dart';
 import 'package:provider/provider.dart';
+
+import '../provider/location_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -3,8 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:kakaotaxi_front/screen/KakaoLoginScreen.dart';
 import 'package:kakaotaxi_front/screen/TexiMapScreen.dart';
-import 'package:kakaotaxi_front/provider/LoginProvider.dart';
-import 'package:kakaotaxi_front/provider/locationProvider.dart';
+import 'package:kakaotaxi_front/provider/login_provider.dart';
+import 'package:kakaotaxi_front/provider/location_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'screen/splashScreen.dart';

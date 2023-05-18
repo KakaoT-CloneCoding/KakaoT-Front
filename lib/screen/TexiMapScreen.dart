@@ -1,14 +1,11 @@
-import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
-import 'package:kakaotaxi_front/model/loc_model.dart';
-import 'package:kakaotaxi_front/provider/locationProvider.dart';
 import 'package:kakaotaxi_front/widget/loc_info_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../provider/location_provider.dart';
 
 final kakaoMapKey = dotenv.env['kakao_map_key'];
 
