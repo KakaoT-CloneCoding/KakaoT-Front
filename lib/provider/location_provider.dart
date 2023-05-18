@@ -83,5 +83,13 @@ class GetLocationProvider with ChangeNotifier {
         print('Failed to search address');
       }
     }
+
+    sendPosition(double lat, double lng) {
+      String url = 'server api';
+      http.post(Uri.parse(url), body: {
+        'lat': lat,
+        'lng': lng,
+      });
+    }
   }
 }
