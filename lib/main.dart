@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:kakaotaxi_front/provider/role_provider.dart';
 import 'package:kakaotaxi_front/screen/KakaoLoginScreen.dart';
 import 'package:kakaotaxi_front/screen/TexiMapScreen.dart';
 import 'package:kakaotaxi_front/provider/login_provider.dart';
 import 'package:kakaotaxi_front/provider/location_provider.dart';
+import 'package:kakaotaxi_front/screen/role_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'screen/splashScreen.dart';
@@ -26,7 +28,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: ((context) => GetLocationProvider()))
+        ChangeNotifierProvider(create: ((context) => GetLocationProvider())),
+        ChangeNotifierProvider(create: ((context) => RoleProvider())),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const SplashScreen(),
+        // home: const RoleScreen(),
       ),
     );
   }
