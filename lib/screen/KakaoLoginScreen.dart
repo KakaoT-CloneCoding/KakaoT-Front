@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kakaotaxi_front/provider/login_provider.dart';
+import 'package:kakaotaxi_front/screen/role_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'MainScreen.dart';
@@ -74,7 +75,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: ((context) => MainScreen())));
+                              builder: ((context) => RoleScreen())));
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
