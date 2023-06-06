@@ -16,6 +16,8 @@ class LoginProvider with ChangeNotifier {
   TargetPage _targetPage = TargetPage.login;
   TargetPage get targetPage => _targetPage;
 
+  late UserModel _userModel;
+  UserModel get userModel => _userModel;
   kakaoLoginApi(String access_token) async {
     try {
       final url = Uri.parse(loginUrl);
@@ -26,7 +28,7 @@ class LoginProvider with ChangeNotifier {
       });
       if (response.statusCode == 201) {
         Map<String, dynamic> data = json.decode(response.body);
-        UserModel userModel = UserModel.fromJson(data);
+        _userModel = UserModel.fromJson(data);
       } else {
         throw Exception('Failed to load data');
       }
